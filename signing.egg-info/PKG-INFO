@@ -1,0 +1,18 @@
+Metadata-Version: 1.0
+Name: signing
+Version: 0.1
+Summary: Application receipt certifier and verifier
+Home-page: http://mozilla.org
+Author: Ryan Tilder
+Author-email: service-dev@mozilla.com
+License: UNKNOWN
+Description: Documentation
+        =============
+        
+        See https://wiki.mozilla.org/Apps/WebApplicationReceipt/SigningService
+Keywords: web services
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Framework :: Pylons
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application
