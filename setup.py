@@ -9,7 +9,7 @@ with open(os.path.join(here, 'README')) as f:
     README = f.read()
 
 
-setup(name='trunion',
+setup(name='signing',
     version=0.1,
     description="Application receipt certifier and verifier",
     long_description=README,
@@ -29,9 +29,9 @@ setup(name='trunion',
     install_requires=['cornice', 'PasteScript'],
     entry_points = """\
     [paste.app_factory]
-    main = trunion:main
+    main = signing:main
     [console_scripts]
-    check_keys = trunion.scripts:check_keys
+    check_keys = signing.scripts:check_keys
     """,
     paster_plugins=['pyramid'],
 )

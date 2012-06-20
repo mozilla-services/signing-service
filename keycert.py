@@ -1,5 +1,33 @@
+#!/usr/bin/env python
+
 import argparse
-import M2Crypto, jwt, json, time, requests, struct, hashlib
+import M2Crypto
+import json
+import time
+import requests
+import struct
+import hashlib
+import sys
+
+try:
+    import jwt
+
+    if not hasattr(jwt, 'rsa_load'):
+        del jwt
+        try:
+            import signing.jwt as jwt
+        except ImportError:
+            print "\n\n\tCouldn't find an RSA enabled jwt module.\n"
+            print "\n\tSee https://github.com/michaelrhanson/pyjwt/"
+            sys.exit(1)
+except ImportError:
+    try:
+        import signing.jwt as jwt
+    except:
+        print "\n\n\tCouldn't find an RSA enabled jwt module.\n"
+        print "\n\tSee https://github.com/michaelrhanson/pyjwt/"
+        sys.exit(1)
+
 
 DEFAULT_ISSUER = 'https://marketplace-cdn.addons.mozilla.net/public_keys/appstore-root-pub-key.jwk'
 
@@ -75,7 +103,7 @@ def jwk2rsa(jwk):
 def fetch_pubkey(url):
     # Fetch the issuer's public key from the URL provided by the key
     try:
-        print "Fetching root pub key from %s" % url
+        print "#Fetching root pub key from %s" % url
         response = requests.get(url)
         if response.status_code == 200:
             jwk = json.loads(response.text)
@@ -87,10 +115,10 @@ def fetch_pubkey(url):
         else:
             raise requests.RequestException("Received a %d" % response.status)
     except requests.RequestException, e:
-        print "Couldn't fetch %s: %s" % (url, str(e))
+        print "#Couldn't fetch %s: %s" % (url, str(e))
         raise e
     except Exception, e:
-        print "Failed to convert fetched root pub key: %s" % e
+        print "#Failed to convert fetched root pub key: %s" % e
         raise e
 
 def jwkify(pub, keyid):
@@ -116,7 +144,8 @@ def save_jwsplat(args, typ, value):
                                                                      e))
     with open(filename, 'w') as f:
         f.write(value)
-    print "Saved to %s" % filename
+    print "#Saved to %s" % filename
+    print "%s=\"%s\"" % (typ, filename)
 
 #
 # Subcommand functions
@@ -127,10 +156,12 @@ def newkey(args):
 
     try:
         key.save_key(args.pem, None)
-        print "Saved to %s" % args.pem
+        print "#Saved to %s" % args.pem
+        print "keyfile=\"%s\"" % args.pem
     except AttributeError:
         key.save_key(args.keyid + ".pem", None)
-        print "Saved to %s" % args.keyid + ".pem"
+        print "#Saved to %s" % args.keyid + ".pem"
+        print "keyfile=\"%s.pem\"" % args.keyid
     except Exception, e:
         raise ValueError("Couldn't save as PEM to \"%s\": %s" % (args.pem, e))
 
@@ -266,4 +297,5 @@ def run(argv):
 
 if __name__ == '__main__':
     import sys
+    sys.argv.pop(0)  # Discard the executable name
     run(sys.argv)

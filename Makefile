@@ -1,4 +1,4 @@
-APPNAME = trunion
+APPNAME = signing
 DEPS =
 HERE = $(shell pwd)
 BIN = $(HERE)/bin
@@ -11,7 +11,7 @@ BUILDRPMS = $(BIN)/buildrpms
 PYPI = http://pypi.python.org/simple
 PYPIOPTIONS = -i $(PYPI)
 PYPI2 = http://pypi.python.org/packages
-BUILD_TMP = /tmp/trunion-build.${USER}
+BUILD_TMP = /tmp/signing-build.${USER}
 DOTCHANNEL := $(wildcard .channel)
 ifeq ($(strip $(DOTCHANNEL)),)
 	CHANNEL = dev
@@ -53,6 +53,7 @@ build:
 	$(INSTALL) MoPyTools
 	$(INSTALL) nose
 	$(INSTALL) WebTest
+	$(INSTALL) M2Crypto
 	$(BUILDAPP) -c $(CHANNEL) $(PYPIOPTIONS) $(DEPS)
 
 update:
@@ -75,4 +76,4 @@ mach: build build_rpms
 	cd rpms; wget http://mrepo.mozilla.org/mrepo/5-x86_64/RPMS.mozilla-services/gunicorn-0.11.2-1moz.x86_64.rpm
 	cd rpms; wget http://mrepo.mozilla.org/mrepo/5-x86_64/RPMS.mozilla/nginx-0.7.65-4.x86_64.rpm
 	mach yum install rpms/*
-	mach chroot python2.6 -m trunion.run
+	mach chroot python2.6 -m signing.run
