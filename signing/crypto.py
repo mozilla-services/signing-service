@@ -112,6 +112,7 @@ class KeyStore(object):
                         # Swallow the error, keep on ticking. Logging occurred
                         # in the methods
                         pass
+                    logging.info("keys updated")
             # Record time of last stat as long as we didn't encounter an
             # unhandled exception
             self.last_stat = now
