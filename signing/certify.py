@@ -1,5 +1,38 @@
-#!/usr/bin/env python
-
+# ***** BEGIN LICENSE BLOCK *****
+# Version: MPL 1.1/GPL 2.0/LGPL 2.1
+#
+# The contents of this file are subject to the Mozilla Public License Version
+# 1.1 (the "License"); you may not use this file except in compliance with
+# the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS" basis,
+# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# for the specific language governing rights and limitations under the
+# License.
+#
+# The Original Code is Signing Service
+#
+# The Initial Developer of the Original Code is the Mozilla Foundation.
+# Portions created by the Initial Developer are Copyright (C) 2011
+# the Initial Developer. All Rights Reserved.
+#
+# Contributor(s):
+#   Ryan Tilder (rtilder@mozilla.com)
+#
+# Alternatively, the contents of this file may be used under the terms of
+# either the GNU General Public License Version 2 or later (the "GPL"), or
+# the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+# in which case the provisions of the GPL or the LGPL are applicable instead
+# of those above. If you wish to allow use of your version of this file only
+# under the terms of either the GPL or the LGPL, and not to allow others to
+# use your version of this file under the terms of the MPL, indicate your
+# decision by deleting the provisions above and replace them with the notice
+# and other provisions required by the GPL or the LGPL. If you do not delete
+# the provisions above, a recipient may use your version of this file under
+# the terms of any one of the MPL, the GPL or the LGPL.
+#
+# ***** END LICENSE BLOCK *****
 import argparse
 import M2Crypto
 import json
@@ -9,25 +42,7 @@ import struct
 import hashlib
 import sys
 
-try:
-    import jwt
-
-    if not hasattr(jwt, 'rsa_load'):
-        del jwt
-        try:
-            import signing.jwt as jwt
-        except ImportError:
-            print "\n\n\tCouldn't find an RSA enabled jwt module.\n"
-            print "\n\tSee https://github.com/michaelrhanson/pyjwt/"
-            sys.exit(1)
-except ImportError:
-    try:
-        import signing.jwt as jwt
-    except:
-        print "\n\n\tCouldn't find an RSA enabled jwt module.\n"
-        print "\n\tSee https://github.com/michaelrhanson/pyjwt/"
-        sys.exit(1)
-
+import signing.jwt as jwt
 
 DEFAULT_ISSUER = 'https://marketplace-cdn.addons.mozilla.net/public_keys/appstore-root-pub-key.jwk'
 
@@ -229,7 +244,7 @@ def pem2jwk(args):
 
 def run(argv):
     # Command line handling
-    cmdline = argparse.ArgumentParser(prog="keycert")
+    cmdline = argparse.ArgumentParser(prog="certifier")
     cmdline.add_argument("--environment", "-e", dest="environment",
                          default='prod',
                          help="Set to \"prod\" if you want to use HSM to sign")
@@ -293,9 +308,3 @@ def run(argv):
 
     args = cmdline.parse_args(argv)
     args.func(args)
-
-
-if __name__ == '__main__':
-    import sys
-    sys.argv.pop(0)  # Discard the executable name
-    run(sys.argv)

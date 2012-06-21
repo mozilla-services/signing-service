@@ -32,6 +32,7 @@ setup(name='signing',
     main = signing:main
     [console_scripts]
     check_keys = signing.scripts:check_keys
+    certifier = signing.scripts:certifier
     """,
     paster_plugins=['pyramid'],
 )

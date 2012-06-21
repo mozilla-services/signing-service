@@ -11,7 +11,7 @@ import atexit
 
 from signing.tests import (SigningTest, StupidRequest, HTTP_PORT,
                            ROOT_PRIV_PATH, ROOT_PUB_PATH, ISSUER_URL)
-from keycert import run
+from signing.certify import run
 
 HTTPD = None
 
@@ -49,7 +49,7 @@ def serve_http():
     httpd.serve_forever()
 
 
-# Setup a simple HTTP server to use with keycert.py checks
+# Setup a simple HTTP server to use with certifier checks
 os.chdir("signing/tests")
 # Generate test run root key pair
 generate_root()

@@ -4,7 +4,7 @@ import signing.jwt as jwt
 import json
 
 from signing.tests import SigningTest, stamp, ROOT_PRIV_PATH, ISSUER_URL
-from keycert import run
+from signing.certify import run
 
 
 # Subclass SigningTest to get all the test setup

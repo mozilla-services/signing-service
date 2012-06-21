@@ -33,7 +33,6 @@ python2.6 setup.py build
 
 %install
 python2.6 setup.py install --single-version-externally-managed --root=$RPM_BUILD_ROOT --record=INSTALLED_FILES
-%{__install} -m 0755 keycert.py $RPM_BUILD_ROOT/%{_bindir}/certifier
 
 %clean
 rm -rf $RPM_BUILD_ROOT

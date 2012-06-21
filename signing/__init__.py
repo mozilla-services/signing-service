@@ -36,8 +36,6 @@
 
 """Main entry point
 """
-from mozsvc.config import get_configurator
-
 import crypto
 
 
@@ -63,6 +61,7 @@ def includeme(config):
 
 
 def main(global_config, **settings):
+    from mozsvc.config import get_configurator
     config = get_configurator(global_config, **settings)
     config.include(includeme)
     return config.make_wsgi_app()

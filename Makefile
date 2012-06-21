@@ -53,7 +53,6 @@ build:
 	$(INSTALL) MoPyTools
 	$(INSTALL) nose
 	$(INSTALL) WebTest
-	$(INSTALL) M2Crypto
 	$(BUILDAPP) -c $(CHANNEL) $(PYPIOPTIONS) $(DEPS)
 
 update:
@@ -77,3 +76,6 @@ mach: build build_rpms
 	cd rpms; wget http://mrepo.mozilla.org/mrepo/5-x86_64/RPMS.mozilla/nginx-0.7.65-4.x86_64.rpm
 	mach yum install rpms/*
 	mach chroot python2.6 -m signing.run
+
+clean:
+	rm -rf bin build build1 deps dist include lib lib64 man rpms
