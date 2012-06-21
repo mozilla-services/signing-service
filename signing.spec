@@ -1,5 +1,5 @@
 %define pyver 26
-%define name python%{pyver}-receiptsigner
+%define name python%{pyver}-signing-service
 %define pythonname signing
 %define version 0.1
 %define release 1
@@ -18,7 +18,7 @@ Vendor: Services team <services-dev@mozilla.org>
 Requires: python%{pyver} python%{pyver}-setuptools python%{pyver}-webob
 Requires: python%{pyver}-paste python%{pyver}-pastedeploy python%{pyver}-pyramid
 Requires: python%{pyver}-simplejson python%{pyver}-m2crypto python%{pyver}-cef
-Requires: python%{pyver}-jwt
+#Requires: python%{pyver}-jwt
 
 Url: https://github.com/mozilla-services/signing-service/
 
