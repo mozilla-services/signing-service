@@ -41,7 +41,8 @@
 #
 
 import sys, ConfigParser, struct
-import M2Crypto, hashlib, jwt, json, requests
+import M2Crypto, hashlib, json, requests
+import signing.jwt as jwt
 
 # Convert a JWK exponent or modulus from base64 URL safe encoded big endian
 # byte string to an OpenSSL MPINT
